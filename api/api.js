@@ -17,8 +17,7 @@ export default async function handler(req, res) {
     const response = await fetch(targetUrl, {
       method: req.method,
       headers: {
-        'Content-Type': 'application/json',
-        ...(req.headers.authorization && { Authorization: req.headers.authorization }),
+        'Content-Type': 'application/json'
       },
       body: ['POST', 'PUT', 'PATCH'].includes(req.method)
         ? JSON.stringify(req.body || await readBody(req))
