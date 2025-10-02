@@ -1,4 +1,14 @@
 export default async function handler(req, res) {
+  // CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*"); // o especifica tu frontend exacto
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // Preflight request
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   const path = req.url.replace(/^\/api/, '');
   const url = `https://optisteel.ingaria.com${path}`;
 
