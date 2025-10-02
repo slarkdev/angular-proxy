@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   // CORS headers
-  res.setHeader("Access-Control-Allow-Origin", "*"); // o especifica tu frontend exacto
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Origin", "https://optisteel.vercel.app"); // o '*' si estás en desarrollo
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
   // Preflight request
@@ -9,11 +9,12 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const path = req.url.replace(/^\/api/, '');
-  const url = `https://optisteel.ingaria.com${path}`;
+  const backendBase = 'https://optisteel.ingaria.com';
+  const proxyPath = req.url.replace(/^\/api/, '');
+  const targetUrl = `${backendBase}${proxyPath}`;
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(targetUrl, {
       method: req.method,
       headers: {
         'Content-Type': 'application/json',
